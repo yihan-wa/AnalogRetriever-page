@@ -140,6 +140,22 @@ table.ar-table tr.hero-row td.rowhead {
 .delta-pos.big { background:linear-gradient(90deg,#e8730c,#f7b733); }
 .tbl-caption { margin-top:0.7rem; font-size:0.92rem; color:var(--ar-muted); }
 .tbl-caption b { color:var(--ar-text); }
+
+/* wider container so the 20-column Table 2 fits without horizontal scroll */
+.container.ar-wide { max-width: 1280px; }
+
+/* compact variant for the wide Table 2 — shrink to fit the viewport */
+table.ar-table.ar-compact { min-width: 0; font-size: 0.74rem; }
+table.ar-table.ar-compact thead th { padding: 0.42rem 0.2rem; font-size: 0.7rem; }
+table.ar-table.ar-compact thead tr.grp th { font-size: 0.74rem; padding: 0.38rem 0.2rem; }
+table.ar-table.ar-compact tbody td { padding: 0.36rem 0.22rem; white-space: nowrap; }
+table.ar-table.ar-compact td.rowhead, table.ar-table.ar-compact th.rowhead { font-size: 0.78rem; }
+table.ar-table.ar-compact td.rowhead sup { font-weight: 400; color: var(--ar-muted); }
+
+/* on narrow viewports the compact table may still need to scroll — that's fine */
+@media (max-width: 900px) {
+  table.ar-table.ar-compact { min-width: 760px; }
+}
 .author-affiliations {
   margin-top: 0.7rem;
   color: var(--ar-muted);

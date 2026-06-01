@@ -252,7 +252,7 @@
 
 <!-- ===================== RESULTS ===================== -->
 <section class="section ar-section-alt">
-  <div class="container is-max-desktop">
+  <div class="container ar-wide">
     <h2 class="title is-3 ar-h2">Cross-Modal Retrieval Results</h2>
     <div class="content has-text-justified">
       <p>
@@ -265,7 +265,7 @@
       </p>
     </div>
     <div class="ar-table-wrap">
-      <table class="ar-table ar-heat">
+      <table class="ar-table ar-heat ar-compact">
         <thead>
           <tr class="grp">
             <th class="rowhead" rowspan="2">Model</th>
@@ -393,8 +393,8 @@
       </p>
     </div>
 
-    <div class="columns is-vcentered">
-      <div class="column is-5">
+    <div class="columns is-centered">
+      <div class="column is-8">
         <div class="ar-table-wrap">
           <table class="ar-table ar-heat">
             <thead>
@@ -418,21 +418,20 @@
             </tbody>
           </table>
         </div>
-        <p class="tbl-caption">
+        <p class="tbl-caption has-text-centered">
           <b>Table 3.</b> Functional correctness (%) on the AnalogCoder benchmark for eight LLMs, with and without
           AnalogRetriever. &Delta; is the absolute gain (avg <b>+5.6</b>).
         </p>
       </div>
-      <div class="column is-7">
-        <div class="ar-figure">
-          <img src="static/images/figure7_cases.png" alt="RAG case studies">
-          <p class="ar-caption">
-            <b>Figure 7. Case studies.</b> Without retrieval (Failure), the LLM produces structurally incorrect circuits
-            (red). With a retrieved schematic as a topological reference (Success), it generates functionally valid
-            circuits &mdash; Task 9: Miller amplifier (0/5 &rarr; 5/5); Task 17: Wien-bridge oscillator (0/5 &rarr; 4/5).
-          </p>
-        </div>
-      </div>
+    </div>
+
+    <div class="ar-figure" style="margin-top:1.6rem;">
+      <img src="static/images/figure7_cases.png" alt="RAG case studies">
+      <p class="ar-caption">
+        <b>Figure 7. Case studies.</b> Without retrieval (Failure), the LLM produces structurally incorrect circuits
+        (red). With a retrieved schematic as a topological reference (Success), it generates functionally valid
+        circuits &mdash; Task 9: Miller amplifier (0/5 &rarr; 5/5); Task 17: Wien-bridge oscillator (0/5 &rarr; 4/5).
+      </p>
     </div>
   </div>
 </section>
