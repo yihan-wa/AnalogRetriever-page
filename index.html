@@ -212,7 +212,7 @@
       </div>
       <div class="column is-5">
         <div class="ar-table-wrap">
-          <table class="ar-table ar-heat">
+          <table class="ar-table ar-heat ar-fit">
             <thead>
               <tr>
                 <th class="rowhead">Stage</th>
@@ -485,13 +485,8 @@
 </footer>
 
 <script>
-// Colour data-table cells by value (per-column heat-map) and bold the column max.
+// Highlight the best (max) value in each data-table column with a filled brand chip.
 (function () {
-  // brand blue heat: pale -> saturated
-  function heat(t) { // t in [0,1]
-    var a = 0.05 + 0.50 * t;           // alpha
-    return 'rgba(43, 93, 209, ' + a.toFixed(3) + ')';
-  }
   document.querySelectorAll('table.ar-heat').forEach(function (table) {
     var rows = Array.from(table.tBodies[0].rows);
     var cols = {};                      // cellIndex -> [{td, val}]
@@ -505,14 +500,9 @@
     });
     Object.keys(cols).forEach(function (ci) {
       var arr = cols[ci];
-      var vals = arr.map(function (o) { return o.val; });
-      var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
-      var span = (max - min) || 1;
+      var max = Math.max.apply(null, arr.map(function (o) { return o.val; }));
       arr.forEach(function (o) {
-        var t = (o.val - min) / span;
-        o.td.style.background = heat(t);
-        if (t > 0.62) o.td.style.color = '#fff';      // keep contrast on dark cells
-        if (o.val === max) o.td.classList.add('best'); // bold column winner
+        if (o.val === max) o.td.classList.add('best'); // colour-fill the column winner
       });
     });
   });

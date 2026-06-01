@@ -106,12 +106,12 @@ table.ar-table {
   font-size:0.92rem; min-width:560px;
 }
 table.ar-table thead th {
-  background:linear-gradient(90deg, var(--ar-primary) 0%, #5577e0 55%, var(--ar-accent) 140%);
+  background:linear-gradient(100deg, #2b5dd1 0%, #4a5ed6 48%, #7c3aed 100%);
   color:#fff; font-weight:700; padding:0.7rem 0.7rem; text-align:center;
   white-space:nowrap; border:none;
 }
 table.ar-table thead tr.grp th {
-  background:linear-gradient(90deg, var(--ar-primary-dark), #3a5fc0);
+  background:linear-gradient(100deg, #1d3f91 0%, #4434a8 60%, #6a2fce 100%);
   font-size:0.82rem; letter-spacing:0.03em; padding:0.45rem 0.5rem;
 }
 table.ar-table th.rowhead, table.ar-table td.rowhead {
@@ -121,17 +121,19 @@ table.ar-table tbody td {
   padding:0.5rem 0.6rem; text-align:center; border-top:1px solid #eef1f7;
   color:#374151; transition:background 0.2s;
 }
-table.ar-table tbody tr:hover td { filter:brightness(0.97); }
-table.ar-table td.best { font-weight:800; color:#16223a; }
-table.ar-table tr.blk-sep td { border-top:2px solid #cdd6e8; }
-/* highlighted hero row */
-table.ar-table tr.hero-row td {
-  background:linear-gradient(90deg, rgba(124,58,237,0.10), rgba(43,93,209,0.10) 60%, rgba(232,73,29,0.10));
-  font-weight:700;
+table.ar-table tbody tr:hover td { filter:brightness(0.98); }
+/* per-column best value: filled brand-gradient chip cell, others stay white */
+table.ar-table td.best {
+  background:linear-gradient(135deg, #2b5dd1 0%, #6d3ae6 100%);
+  color:#fff; font-weight:800;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
 }
+table.ar-table tr.blk-sep td { border-top:2px solid #cdd6e8; }
+/* hero row: keep a subtle row-label accent; data cells follow the best/white rule */
+table.ar-table tr.hero-row td { font-weight:700; }
 table.ar-table tr.hero-row td.rowhead {
   border-left:4px solid var(--ar-accent);
-  background:linear-gradient(90deg, rgba(232,73,29,0.16), rgba(124,58,237,0.10));
+  background:linear-gradient(90deg, rgba(232,73,29,0.12), rgba(124,58,237,0.06));
   color:#1d3f91;
 }
 /* delta badges (table 3) */
@@ -143,6 +145,13 @@ table.ar-table tr.hero-row td.rowhead {
 
 /* wider container so the 20-column Table 2 fits without horizontal scroll */
 .container.ar-wide { max-width: 1280px; }
+
+/* small tables (e.g. Table 1) shrink to fit their column instead of scrolling */
+table.ar-table.ar-fit { min-width: 0; font-size: 0.86rem; }
+table.ar-table.ar-fit td.rowhead, table.ar-table.ar-fit th.rowhead {
+  white-space: normal; line-height: 1.2;   /* long stage labels may wrap */
+}
+table.ar-table.ar-fit thead th, table.ar-table.ar-fit tbody td { padding: 0.5rem 0.45rem; }
 
 /* compact variant for the wide Table 2 — shrink to fit the viewport */
 table.ar-table.ar-compact { min-width: 0; font-size: 0.74rem; }
