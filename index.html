@@ -28,20 +28,20 @@
 
       <div class="ar-venue">Under Review &middot; Pre-print 2026</div>
 
-      <!-- Authors -->
+      <!-- Authors (name colour = affiliation colour) -->
       <div class="publication-authors">
-        <span class="author-block"><a href="mailto:wa23@mails.tsinghua.edu.cn">Yihan Wang</a><sup>1,&#42;</sup></span>
-        <span class="author-block"><a href="mailto:nlp.lilei@gmail.com">Lei Li</a><sup>2,&#42;</sup></span>
-        <span class="author-block"><a href="mailto:yl2204@cam.ac.uk">Yao Lai</a><sup>3</sup></span>
-        <span class="author-block"><a href="mailto:wangjing25@njupt.edu.cn">Jing Wang</a><sup>4,&dagger;</sup></span>
-        <span class="author-block"><a href="mailto:yanlu@tsinghua.edu.cn">Yan Lu</a><sup>1,&dagger;</sup></span>
+        <span class="author-block"><a class="aff-thu"   href="mailto:wa23@mails.tsinghua.edu.cn">Yihan Wang</a><sup class="sup-thu">1,&#42;</sup></span>
+        <span class="author-block"><a class="aff-hku"   href="mailto:nlp.lilei@gmail.com">Lei Li</a><sup class="sup-hku">2,&#42;</sup></span>
+        <span class="author-block"><a class="aff-cam"   href="mailto:yl2204@cam.ac.uk">Yao Lai</a><sup class="sup-cam">3</sup></span>
+        <span class="author-block"><a class="aff-njupt" href="mailto:wangjing25@njupt.edu.cn">Jing Wang</a><sup class="sup-njupt">4,&dagger;</sup></span>
+        <span class="author-block"><a class="aff-thu"   href="mailto:yanlu@tsinghua.edu.cn">Yan Lu</a><sup class="sup-thu">1,&dagger;</sup></span>
       </div>
 
       <div class="author-affiliations">
-        <sup>1</sup>Tsinghua University &nbsp;&bull;&nbsp;
-        <sup>2</sup>The University of Hong Kong &nbsp;&bull;&nbsp;
-        <sup>3</sup>University of Cambridge &nbsp;&bull;&nbsp;
-        <sup>4</sup>Nanjing University of Posts and Telecommunications
+        <span class="aff-chip chip-thu"><span class="dot"></span><sup>1</sup>&nbsp;Tsinghua University</span>
+        <span class="aff-chip chip-hku"><span class="dot"></span><sup>2</sup>&nbsp;The University of Hong Kong</span>
+        <span class="aff-chip chip-cam"><span class="dot"></span><sup>3</sup>&nbsp;University of Cambridge</span>
+        <span class="aff-chip chip-njupt"><span class="dot"></span><sup>4</sup>&nbsp;Nanjing Univ. of Posts &amp; Telecom.</span>
       </div>
       <div class="eql-cntrb"><sup>&#42;</sup>Equal contribution &nbsp;&nbsp; <sup>&dagger;</sup>Corresponding authors</div>
 
@@ -211,13 +211,40 @@
         </div>
       </div>
       <div class="column is-5">
-        <div class="ar-figure">
-          <img src="static/images/table1.png" alt="Dataset quality table">
-          <p class="ar-caption">
-            <b>Table 1.</b> Dataset quality before and after our two-stage refinement &mdash; compile rate
-            22.0% &rarr; 100% and DC pass rate 11.4% &rarr; 100%.
-          </p>
+        <div class="ar-table-wrap">
+          <table class="ar-table ar-heat">
+            <thead>
+              <tr>
+                <th class="rowhead">Stage</th>
+                <th># Triplets</th>
+                <th>Compile&nbsp;(%)</th>
+                <th>DC&nbsp;Pass&nbsp;(%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rowhead">Original MASALA-Chai</td>
+                <td>6,069</td><td class="v">22.0</td><td class="v">11.4</td>
+              </tr>
+              <tr>
+                <td class="rowhead">+ Stage 1 (Initial Repair)</td>
+                <td>6,371</td><td class="v">99.2</td><td class="v">74.1</td>
+              </tr>
+              <tr>
+                <td class="rowhead">+ Stage 2 (Feedback Refinement)</td>
+                <td>6,371</td><td class="v">100.0</td><td class="v">99.7</td>
+              </tr>
+              <tr class="hero-row blk-sep">
+                <td class="rowhead">Final (after filtering)</td>
+                <td>6,354</td><td class="v">100.0</td><td class="v">100.0</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <p class="tbl-caption">
+          <b>Table 1.</b> Dataset quality before and after our two-stage refinement &mdash; compile rate
+          22.0% &rarr; 100% and DC pass rate 11.4% &rarr; 100%.
+        </p>
       </div>
     </div>
   </div>
@@ -237,14 +264,118 @@
         94% at R@5 and 97% at R@10.
       </p>
     </div>
-    <div class="ar-figure">
-      <img src="static/images/table2.png" alt="Cross-modal retrieval performance table">
-      <p class="ar-caption">
-        <b>Table 2. Cross-modal retrieval performance on the test set (N=1,000).</b>
-        I: Image (schematic), T: Text (description), C: Circuit (netlist). The upper block shows external baselines;
-        the lower block our ablations. AnalogRetriever is the full model with RGCN and curriculum learning.
-      </p>
+    <div class="ar-table-wrap">
+      <table class="ar-table ar-heat">
+        <thead>
+          <tr class="grp">
+            <th class="rowhead" rowspan="2">Model</th>
+            <th colspan="3">I&rarr;C</th>
+            <th colspan="3">T&rarr;I</th>
+            <th colspan="3">T&rarr;C</th>
+            <th colspan="3">C&rarr;I</th>
+            <th colspan="3">I&rarr;T</th>
+            <th colspan="3">C&rarr;T</th>
+            <th rowspan="2">Avg<br>R@1</th>
+          </tr>
+          <tr>
+            <th>R@1</th><th>R@5</th><th>R@10</th>
+            <th>R@1</th><th>R@5</th><th>R@10</th>
+            <th>R@1</th><th>R@5</th><th>R@10</th>
+            <th>R@1</th><th>R@5</th><th>R@10</th>
+            <th>R@1</th><th>R@5</th><th>R@10</th>
+            <th>R@1</th><th>R@5</th><th>R@10</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rowhead">CLIP <sup>[13]</sup></td>
+            <td class="v">1.2</td><td class="v">4.6</td><td class="v">8.9</td>
+            <td class="v">2.2</td><td class="v">8.2</td><td class="v">13.5</td>
+            <td class="v">2.9</td><td class="v">9.7</td><td class="v">16.2</td>
+            <td class="v">2.9</td><td class="v">10.1</td><td class="v">15.7</td>
+            <td class="v">2.7</td><td class="v">7.6</td><td class="v">12.9</td>
+            <td class="v">3.2</td><td class="v">11.2</td><td class="v">17.4</td>
+            <td class="v">2.5</td>
+          </tr>
+          <tr>
+            <td class="rowhead">CROP <sup>[14]</sup></td>
+            <td class="v">2.3</td><td class="v">8.4</td><td class="v">15.0</td>
+            <td class="v">2.2</td><td class="v">8.2</td><td class="v">13.5</td>
+            <td class="v">9.2</td><td class="v">25.8</td><td class="v">37.1</td>
+            <td class="v">2.4</td><td class="v">8.5</td><td class="v">14.2</td>
+            <td class="v">2.7</td><td class="v">7.6</td><td class="v">12.9</td>
+            <td class="v">9.4</td><td class="v">24.7</td><td class="v">33.0</td>
+            <td class="v">4.7</td>
+          </tr>
+          <tr>
+            <td class="rowhead">ChatLS <sup>[28]</sup></td>
+            <td class="v">0.9</td><td class="v">5.9</td><td class="v">11.3</td>
+            <td class="v">2.2</td><td class="v">8.2</td><td class="v">13.5</td>
+            <td class="v">9.5</td><td class="v">24.0</td><td class="v">35.1</td>
+            <td class="v">1.6</td><td class="v">6.6</td><td class="v">10.0</td>
+            <td class="v">2.7</td><td class="v">7.6</td><td class="v">12.9</td>
+            <td class="v">7.2</td><td class="v">20.4</td><td class="v">31.3</td>
+            <td class="v">4.0</td>
+          </tr>
+          <tr>
+            <td class="rowhead">NetTAG <sup>[29]</sup></td>
+            <td class="v">0.2</td><td class="v">2.5</td><td class="v">4.5</td>
+            <td class="v">2.2</td><td class="v">8.2</td><td class="v">13.5</td>
+            <td class="v">0.5</td><td class="v">3.4</td><td class="v">6.8</td>
+            <td class="v">0.1</td><td class="v">1.4</td><td class="v">4.1</td>
+            <td class="v">2.7</td><td class="v">7.6</td><td class="v">12.9</td>
+            <td class="v">0.4</td><td class="v">3.4</td><td class="v">7.1</td>
+            <td class="v">1.0</td>
+          </tr>
+          <tr class="blk-sep">
+            <td class="rowhead">TI (Bi-Modal)</td>
+            <td>&ndash;</td><td>&ndash;</td><td>&ndash;</td>
+            <td class="v">70.5</td><td class="v">92.9</td><td class="v">96.8</td>
+            <td>&ndash;</td><td>&ndash;</td><td>&ndash;</td>
+            <td>&ndash;</td><td>&ndash;</td><td>&ndash;</td>
+            <td class="v">69.8</td><td class="v">94.1</td><td class="v">96.7</td>
+            <td>&ndash;</td><td>&ndash;</td><td>&ndash;</td>
+            <td>&ndash;</td>
+          </tr>
+          <tr>
+            <td class="rowhead">TIC (GCN)</td>
+            <td class="v">62.9</td><td class="v">92.2</td><td class="v">95.7</td>
+            <td class="v">70.8</td><td class="v">95.7</td><td class="v">98.4</td>
+            <td class="v">67.7</td><td class="v">95.7</td><td class="v">99.0</td>
+            <td class="v">60.9</td><td class="v">91.6</td><td class="v">95.6</td>
+            <td class="v">71.3</td><td class="v">96.4</td><td class="v">98.8</td>
+            <td class="v">65.5</td><td class="v">95.7</td><td class="v">98.9</td>
+            <td class="v">66.5</td>
+          </tr>
+          <tr>
+            <td class="rowhead">TIC (RGCN)</td>
+            <td class="v">65.2</td><td class="v">92.5</td><td class="v">96.8</td>
+            <td class="v">71.8</td><td class="v">96.2</td><td class="v">98.8</td>
+            <td class="v">69.1</td><td class="v">96.4</td><td class="v">99.2</td>
+            <td class="v">61.9</td><td class="v">92.9</td><td class="v">96.7</td>
+            <td class="v">71.1</td><td class="v">96.7</td><td class="v">98.9</td>
+            <td class="v">67.3</td><td class="v">96.4</td><td class="v">99.0</td>
+            <td class="v">67.7</td>
+          </tr>
+          <tr class="hero-row">
+            <td class="rowhead">AnalogRetriever</td>
+            <td class="v">74.7</td><td class="v">95.5</td><td class="v">98.1</td>
+            <td class="v">78.2</td><td class="v">96.8</td><td class="v">97.9</td>
+            <td class="v">75.6</td><td class="v">96.3</td><td class="v">98.6</td>
+            <td class="v">72.0</td><td class="v">94.8</td><td class="v">97.9</td>
+            <td class="v">78.5</td><td class="v">96.7</td><td class="v">98.3</td>
+            <td class="v">72.4</td><td class="v">96.7</td><td class="v">98.3</td>
+            <td class="v">75.2</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <p class="tbl-caption">
+      <b>Table 2. Cross-modal retrieval performance on the test set (N=1,000).</b>
+      I: Image (schematic), T: Text (description), C: Circuit (netlist). The upper block shows external baselines;
+      the lower block our ablations. AnalogRetriever is the full model with RGCN and curriculum learning.
+      Cell shading scales with the value within each column; the best per column is bold.
+    </p>
   </div>
 </section>
 
@@ -264,13 +395,33 @@
 
     <div class="columns is-vcentered">
       <div class="column is-5">
-        <div class="ar-figure">
-          <img src="static/images/table3.png" alt="Functional correctness with RAG">
-          <p class="ar-caption">
-            <b>Table 3.</b> Functional correctness (%) on the AnalogCoder benchmark for eight LLMs, with and without
-            AnalogRetriever. &Delta; is the absolute gain (avg <b>+5.6</b>).
-          </p>
+        <div class="ar-table-wrap">
+          <table class="ar-table ar-heat">
+            <thead>
+              <tr>
+                <th class="rowhead">LLM</th>
+                <th>Baseline</th>
+                <th>+RAG</th>
+                <th>&Delta;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="rowhead">GPT-4o-mini</td><td class="v">30.8</td><td class="v">40.8</td><td><span class="delta-pos big">+10.0</span></td></tr>
+              <tr><td class="rowhead">Nemotron-120B</td><td class="v">34.2</td><td class="v">37.5</td><td><span class="delta-pos">+3.3</span></td></tr>
+              <tr><td class="rowhead">GPT-5.4-mini</td><td class="v">65.0</td><td class="v">67.5</td><td><span class="delta-pos">+2.5</span></td></tr>
+              <tr><td class="rowhead">Gemini-3-Flash</td><td class="v">65.0</td><td class="v">70.0</td><td><span class="delta-pos">+5.0</span></td></tr>
+              <tr><td class="rowhead">Kimi-K2</td><td class="v">65.0</td><td class="v">73.3</td><td><span class="delta-pos">+8.3</span></td></tr>
+              <tr><td class="rowhead">GLM-4.6</td><td class="v">73.3</td><td class="v">80.0</td><td><span class="delta-pos">+6.7</span></td></tr>
+              <tr><td class="rowhead">Qwen3.5-397B</td><td class="v">78.3</td><td class="v">85.0</td><td><span class="delta-pos">+6.7</span></td></tr>
+              <tr><td class="rowhead">Claude-Sonnet-4.6</td><td class="v">84.2</td><td class="v">86.7</td><td><span class="delta-pos">+2.5</span></td></tr>
+              <tr class="hero-row blk-sep"><td class="rowhead">Average</td><td>62.0</td><td>67.6</td><td><span class="delta-pos big">+5.6</span></td></tr>
+            </tbody>
+          </table>
         </div>
+        <p class="tbl-caption">
+          <b>Table 3.</b> Functional correctness (%) on the AnalogCoder benchmark for eight LLMs, with and without
+          AnalogRetriever. &Delta; is the absolute gain (avg <b>+5.6</b>).
+        </p>
       </div>
       <div class="column is-7">
         <div class="ar-figure">
@@ -333,6 +484,41 @@
     </p>
   </div>
 </footer>
+
+<script>
+// Colour data-table cells by value (per-column heat-map) and bold the column max.
+(function () {
+  // brand blue heat: pale -> saturated
+  function heat(t) { // t in [0,1]
+    var a = 0.05 + 0.50 * t;           // alpha
+    return 'rgba(43, 93, 209, ' + a.toFixed(3) + ')';
+  }
+  document.querySelectorAll('table.ar-heat').forEach(function (table) {
+    var rows = Array.from(table.tBodies[0].rows);
+    var cols = {};                      // cellIndex -> [{td, val}]
+    rows.forEach(function (tr) {
+      Array.from(tr.cells).forEach(function (td, ci) {
+        if (!td.classList.contains('v')) return;
+        var val = parseFloat(td.textContent.replace(/[^0-9.\-]/g, ''));
+        if (isNaN(val)) return;
+        (cols[ci] = cols[ci] || []).push({ td: td, val: val });
+      });
+    });
+    Object.keys(cols).forEach(function (ci) {
+      var arr = cols[ci];
+      var vals = arr.map(function (o) { return o.val; });
+      var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+      var span = (max - min) || 1;
+      arr.forEach(function (o) {
+        var t = (o.val - min) / span;
+        o.td.style.background = heat(t);
+        if (t > 0.62) o.td.style.color = '#fff';      // keep contrast on dark cells
+        if (o.val === max) o.td.classList.add('best'); // bold column winner
+      });
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
