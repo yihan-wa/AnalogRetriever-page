@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AnalogRetriever: Learning Cross-Modal Representations for Analog Circuit Retrieval</title>
+  <meta name="description"
+        content="AnalogRetriever — a tri-modal contrastive retrieval framework that aligns natural-language descriptions, schematic images, and SPICE netlists into a shared embedding space for analog circuit search.">
+
+  <!-- Bulma + icon fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero is-light ar-hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="title is-2 publication-title">
+        <span class="ar-gradient-text">AnalogRetriever</span><br>
+        <span class="is-size-4">Learning Cross-Modal Representations for Analog Circuit Retrieval</span>
+      </h1>
+
+      <div class="ar-venue">Under Review &middot; Pre-print 2026</div>
+
+      <!-- Authors -->
+      <div class="publication-authors">
+        <span class="author-block"><a href="mailto:wa23@mails.tsinghua.edu.cn">Yihan Wang</a><sup>1,&#42;</sup></span>
+        <span class="author-block"><a href="mailto:nlp.lilei@gmail.com">Lei Li</a><sup>2,&#42;</sup></span>
+        <span class="author-block"><a href="mailto:yl2204@cam.ac.uk">Yao Lai</a><sup>3</sup></span>
+        <span class="author-block"><a href="mailto:wangjing25@njupt.edu.cn">Jing Wang</a><sup>4,&dagger;</sup></span>
+        <span class="author-block"><a href="mailto:yanlu@tsinghua.edu.cn">Yan Lu</a><sup>1,&dagger;</sup></span>
+      </div>
+
+      <div class="author-affiliations">
+        <sup>1</sup>Tsinghua University &nbsp;&bull;&nbsp;
+        <sup>2</sup>The University of Hong Kong &nbsp;&bull;&nbsp;
+        <sup>3</sup>University of Cambridge &nbsp;&bull;&nbsp;
+        <sup>4</sup>Nanjing University of Posts and Telecommunications
+      </div>
+      <div class="eql-cntrb"><sup>&#42;</sup>Equal contribution &nbsp;&nbsp; <sup>&dagger;</sup>Corresponding authors</div>
+
+      <!-- Links -->
+      <div class="publication-links">
+        <a class="button is-ar-dark" href="static/pdfs/AnalogRetriever_paper.pdf">
+          <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+        </a>
+        <a class="button is-ar-dark" href="https://arxiv.org/abs/2604.23195" target="_blank" rel="noopener">
+          <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+        </a>
+        <a class="button is-link" href="https://huggingface.co/spaces/eulermaxwell/AnalogRetriever" target="_blank" rel="noopener">
+          <span class="icon"><i class="fas fa-rocket"></i></span><span>Live Demo</span>
+        </a>
+        <span class="button is-ar-soon">
+          <span class="icon"><i class="fab fa-github"></i></span><span>Code</span><span class="soon-badge">SOON</span>
+        </span>
+        <span class="button is-ar-soon">
+          <span class="icon"><i class="fas fa-database"></i></span><span>Dataset</span><span class="soon-badge">SOON</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TEASER (Fig 1) ===================== -->
+<section class="section" style="padding-top:1.5rem;">
+  <div class="container is-max-desktop">
+    <div class="ar-figure">
+      <img src="static/images/figure1.png" alt="Motivation for AnalogRetriever">
+      <p class="ar-caption">
+        <b>Figure 1. Motivation.</b> (a) In traditional analog design, engineers manually search across
+        fragmented sources by keyword, followed by time-consuming trial-and-error implementation.
+        (b) AnalogRetriever maps text descriptions, schematic images, and SPICE netlists into a
+        <b>shared semantic embedding space</b>, enabling unified cross-modal retrieval and downstream
+        design generation via RAG.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABSTRACT ===================== -->
+<section class="section ar-section-alt">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">Abstract</h2>
+    <div class="content has-text-justified">
+      <p>
+        Analog circuit design relies heavily on reusing existing intellectual property (IP), yet searching
+        across heterogeneous representations such as SPICE netlists, schematics, and functional descriptions
+        remains challenging. Existing methods are largely limited to exact matching within a single modality,
+        failing to capture cross-modal semantic relationships. To bridge this gap, we present
+        <b>AnalogRetriever</b>, a unified tri-modal retrieval framework for analog circuit search.
+      </p>
+      <p>
+        We first build a high-quality dataset on top of Masala-CHAI through a two-stage repair pipeline that
+        raises the netlist compile rate from <b>22% to 100%</b>. Built on this foundation, AnalogRetriever encodes
+        schematics and descriptions with a vision-language model and netlists with a port-aware relational graph
+        convolutional network (RGCN), mapping all three modalities into a shared embedding space via
+        <b>curriculum contrastive learning</b>. Experiments show that AnalogRetriever achieves an average
+        <b>Recall@1 of 75.2%</b> across all six cross-modal retrieval directions, significantly outperforming
+        existing baselines. When integrated into the AnalogCoder agentic framework as a retrieval-augmented
+        generation module, it consistently improves functional pass rates and enables previously unsolved tasks
+        to be completed. Our code and dataset will be released.
+      </p>
+    </div>
+
+    <!-- Key stats -->
+    <div class="columns ar-stats">
+      <div class="column"><div class="ar-stat-card"><div class="ar-stat-num">75.2%</div><div class="ar-stat-label">Avg Recall@1 across 6 cross-modal directions</div></div></div>
+      <div class="column"><div class="ar-stat-card"><div class="ar-stat-num">15&times;</div><div class="ar-stat-label">over the strongest baseline (CROP, 4.7%)</div></div></div>
+      <div class="column"><div class="ar-stat-card"><div class="ar-stat-num">22&rarr;100%</div><div class="ar-stat-label">netlist compile rate after refinement</div></div></div>
+      <div class="column"><div class="ar-stat-card"><div class="ar-stat-num">86.7%</div><div class="ar-stat-label">new SoTA on AnalogCoder (Claude Sonnet 4.6 + RAG)</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== METHOD ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">Tri-Modal Framework</h2>
+    <div class="content has-text-justified">
+      <p>
+        AnalogRetriever maps SPICE netlists (port-aware <b>RGCN</b>), schematic images (<b>ViT</b>), and text
+        descriptions (<b>Transformer</b>) into a shared <i>d</i>=768 embedding space. Images and text are encoded
+        with a pretrained CLIP backbone (bottom 16 of 24 ViT blocks frozen to avoid catastrophic forgetting),
+        while netlists are parsed into heterogeneous graphs with <b>20 port-aware edge types</b> covering all device
+        terminals (MOSFET drain/gate/source/bulk, BJT collector/base/emitter, diodes, passives, controlled sources,
+        and shared-net connections). The model is trained with tri-modal contrastive learning, an auxiliary
+        circuit-type classification loss, and a three-phase curriculum with hard-negative mining.
+      </p>
+    </div>
+    <div class="ar-figure">
+      <img src="static/images/figure2.png" alt="AnalogRetriever framework">
+      <p class="ar-caption">
+        <b>Figure 2. AnalogRetriever framework.</b> Three modality-specific encoders map netlists (port-aware RGCN),
+        schematic images (ViT), and text descriptions (Transformer) into a shared embedding space, trained with
+        tri-modal contrastive learning so that matching circuits are pulled together and non-matching ones pushed apart.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CURRICULUM ===================== -->
+<section class="section ar-section-alt">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">Three-Phase Curriculum Training</h2>
+    <div class="content has-text-justified">
+      <p>
+        Jointly training a randomly initialized RGCN with pretrained CLIP is unstable. We address this with a
+        three-phase curriculum that progressively increases both the number of trainable parameters
+        (RGCN &rarr; RGCN+CLIP) and the sampling difficulty (hard-negative ratio &alpha;: 0.05 &rarr; 0.3):
+      </p>
+      <ul>
+        <li><b>Phase 1 &mdash; Graph Encoder Warm-Up.</b> Only the RGCN is trained; CLIP is frozen. The graph encoder
+          aligns to the existing CLIP space using the code-involved directions with random in-batch negatives.</li>
+        <li><b>Phase 2 &mdash; Transition.</b> CLIP is unfrozen and the full six-way contrastive loss is enabled,
+          still with random sampling, establishing a stable joint-optimisation trajectory.</li>
+        <li><b>Phase 3 &mdash; Curriculum Hard-Negative Mining.</b> Negatives are sampled from the same functional
+          cluster, sharpening discrimination among structurally distinct circuits that share similar functionality
+          (e.g. common-source vs. common-gate, Miller-compensated vs. folded-cascode op-amps).</li>
+      </ul>
+    </div>
+    <div class="ar-figure">
+      <img src="static/images/figure3_curriculum.png" alt="Three-phase curriculum training">
+      <p class="ar-caption">
+        <b>Figure 3. Three-phase curriculum training.</b> Phase 1 warms up the graph encoder with frozen CLIP weights;
+        Phase 2 enables full six-way contrastive learning with random negatives; Phase 3 introduces hard-negative
+        mining to distinguish topologically similar circuits.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DATASET ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">High-Quality Tri-Modal Dataset
+      <span class="soon-badge" style="vertical-align:middle;">COMING SOON</span>
+    </h2>
+    <div class="content has-text-justified">
+      <p>
+        We build upon Masala-CHAI, the largest publicly available tri-modal analog circuit dataset. Our audit
+        revealed severe quality issues: of the 6,371 schematic images, only <b>22.0% compile</b> under Ngspice and
+        a mere 11.4% pass a DC operating-point check. We design a <b>two-stage LLM-based refinement pipeline</b>,
+        connected by an Ngspice simulator acting as the ground-truth oracle, that audits and repairs the dataset
+        into <b>6,354 verified triplets</b> with near-100% compilation and DC pass rate.
+      </p>
+    </div>
+
+    <div class="ar-figure">
+      <img src="static/images/figure4_repair.png" alt="Two-stage refinement pipeline">
+      <p class="ar-caption">
+        <b>Figure 4. Two-stage LLM-based dataset refinement pipeline.</b> Stage 1 performs initial netlist repair with
+        Ngspice validation; Stage 2 applies iterative feedback-guided refinement, where a teacher model repairs
+        failed cases using DC error logs until convergence.
+      </p>
+    </div>
+
+    <div class="columns is-vcentered">
+      <div class="column is-7">
+        <div class="ar-figure no-shadow">
+          <img src="static/images/figure6_beforeafter.png" alt="Before/after refinement examples">
+          <p class="ar-caption">
+            <b>Figure 6. Before / after refinement.</b> Top: SPICE netlist with errors and fixes.
+            Bottom: generic vs. refined functional description.
+          </p>
+        </div>
+      </div>
+      <div class="column is-5">
+        <div class="ar-figure">
+          <img src="static/images/table1.png" alt="Dataset quality table">
+          <p class="ar-caption">
+            <b>Table 1.</b> Dataset quality before and after our two-stage refinement &mdash; compile rate
+            22.0% &rarr; 100% and DC pass rate 11.4% &rarr; 100%.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RESULTS ===================== -->
+<section class="section ar-section-alt">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">Cross-Modal Retrieval Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        AnalogRetriever achieves an average <b>Recall@1 of 75.2%</b> across all six cross-modal directions,
+        outperforming the strongest external baseline (CROP, 4.7%) by over <b>15&times;</b>. Introducing the code
+        modality yields mutual enhancement: even Text&harr;Image directions improve by up to <b>+8.7 R@1</b>.
+        Port-aware RGCN adds <b>+1.6 Avg R@1</b> over the edge-agnostic GCN, and the three-phase curriculum with
+        auxiliary classification adds <b>+7.5 Avg R@1</b> over the non-curriculum variant. Every direction exceeds
+        94% at R@5 and 97% at R@10.
+      </p>
+    </div>
+    <div class="ar-figure">
+      <img src="static/images/table2.png" alt="Cross-modal retrieval performance table">
+      <p class="ar-caption">
+        <b>Table 2. Cross-modal retrieval performance on the test set (N=1,000).</b>
+        I: Image (schematic), T: Text (description), C: Circuit (netlist). The upper block shows external baselines;
+        the lower block our ablations. AnalogRetriever is the full model with RGCN and curriculum learning.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RAG ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">Retrieval-Augmented Generation</h2>
+    <div class="content has-text-justified">
+      <p>
+        We integrate AnalogRetriever into a retrieval-augmented generation (RAG) pipeline with
+        <b>AnalogCoder</b>, a training-free LLM agent for analog design via PySpice code generation.
+        Evaluated on AnalogCoder's 24-task benchmark across eight LLMs, AnalogRetriever delivers a positive gain on
+        <b>all eight</b> models, averaging <b>+5.6%</b> absolute (62.0% &rarr; 67.6%). Augmenting Claude Sonnet 4.6
+        reaches <b>86.7%</b>, a new state of the art &mdash; the benefit generalizes across model families and scales.
+      </p>
+    </div>
+
+    <div class="columns is-vcentered">
+      <div class="column is-5">
+        <div class="ar-figure">
+          <img src="static/images/table3.png" alt="Functional correctness with RAG">
+          <p class="ar-caption">
+            <b>Table 3.</b> Functional correctness (%) on the AnalogCoder benchmark for eight LLMs, with and without
+            AnalogRetriever. &Delta; is the absolute gain (avg <b>+5.6</b>).
+          </p>
+        </div>
+      </div>
+      <div class="column is-7">
+        <div class="ar-figure">
+          <img src="static/images/figure7_cases.png" alt="RAG case studies">
+          <p class="ar-caption">
+            <b>Figure 7. Case studies.</b> Without retrieval (Failure), the LLM produces structurally incorrect circuits
+            (red). With a retrieved schematic as a topological reference (Success), it generates functionally valid
+            circuits &mdash; Task 9: Miller amplifier (0/5 &rarr; 5/5); Task 17: Wien-bridge oscillator (0/5 &rarr; 4/5).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DEMO ===================== -->
+<section class="section ar-section-alt">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">Live Demo</h2>
+    <div class="content has-text-justified">
+      <p>
+        Try AnalogRetriever interactively on Hugging Face Spaces &mdash; query by text, schematic, or netlist and
+        retrieve matching analog circuits across modalities.
+      </p>
+      <p class="has-text-centered">
+        <a class="button is-link is-medium" href="https://huggingface.co/spaces/eulermaxwell/AnalogRetriever" target="_blank" rel="noopener">
+          <span class="icon"><i class="fas fa-up-right-from-square"></i></span>
+          <span>Open the Demo on Hugging Face</span>
+        </a>
+      </p>
+    </div>
+    <iframe class="ar-demo-frame"
+            src="https://eulermaxwell-analogretriever.hf.space"
+            allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            frameborder="0"
+            loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- ===================== BIBTEX ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 ar-h2">BibTeX</h2>
+    <pre class="ar-bibtex">@article{wang2026analogretriever,
+  title   = {AnalogRetriever: Learning Cross-Modal Representations for Analog Circuit Retrieval},
+  author  = {Wang, Yihan and Li, Lei and Lai, Yao and Wang, Jing and Lu, Yan},
+  journal = {arXiv preprint arXiv:2604.23195},
+  year    = {2026}
+}</pre>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container has-text-centered">
+    <p class="ar-footnote">
+      &copy; 2026 AnalogRetriever. Website template adapted from the
+      <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>
+      project page (CC BY-SA 4.0).
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
